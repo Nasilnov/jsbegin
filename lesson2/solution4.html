@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script >
+    // 4. Присвоить переменной а значение в промежутке [0..15]. С помощью оператора switch организовать вывод чисел от a до 15. ###
+    var n = 15;
+    var a = parseInt(prompt(`Задание 4.
+Задайте значение переменной "a" от 0 до 15`));
+    alert(numRow(a));
+
+    function numRow (x) {
+        switch (true) {
+            case (x >=1 && x < 15): {
+                return numRowMo(n);
+                break;
+            }
+            case (x == 15): {
+                return n;
+                break;
+            }
+            default: {
+                return 'Неверное значение';
+            }
+        }
+    }
+
+    function numRowMo(n) {
+        if (n === a) return a;
+        else return numRowMo(n - 1) + " " + n;
+    }
+</script>
+</body>
+</html>

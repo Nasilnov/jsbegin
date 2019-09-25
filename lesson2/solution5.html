@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script >
+// 5. Реализовать основные 4 арифметические операции в виде функций с двумя параметрами. Обязательно использовать оператор return. ###
+    let a = parseFloat(prompt('Введите переменную "a"'));
+    let b = parseFloat(prompt('Введите переменную "b"'));
+    if (!isNaN(a) && !isNaN(b)) {
+        alert(`результат функции сложения = ${add(a, b)}
+результат функции вычитания = ${sub(a, b)}
+результат функции деления = ${div(a, b).toFixed(2)}
+результат функции умножения = ${mul(a, b)}`);
+    }
+    else {
+        alert ('Неверные значения переменных');
+    }
+
+    function add ( a, b ) { //Сложение
+        return a + b;
+    }
+    function sub ( a, b ) { //Вычитание
+        return a - b;
+    }
+    function div ( a, b ) { //Деление
+        return a / b;
+    }
+    function mul ( a, b ) { //Умножение
+        return a * b;
+    }
+</script>
+
+</body>
+</html>
