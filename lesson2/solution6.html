@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script >
+// 6. Реализовать функцию с тремя параметрами: function mathOperation(arg1, arg2, operation),
+//    где arg1, arg2 – значения аргументов, operation – строка с названием операции.
+//    В зависимости от переданного значения операции выполнить одну из арифметических операций (использовать функции из пункта 3)
+//    и вернуть полученное значение (использовать switch). ### 7. *Сравнить null и 0. Попробуйте объяснить результат. ###
+
+let a = parseFloat(prompt('Введите переменную "a"'));
+let b = parseFloat(prompt('Введите переменную "b"'));
+let c = prompt(`Введите символ операции:
+Сложение - "+",
+Вычитание - "-",
+Умножение - "*",
+Деление  - "/".
+`);
+
+if (!isNaN(a) && !isNaN(b)) {
+    alert(`результат функции ${mathOperation(a, b, c)}`);
+}
+else {
+    alert ('Неверные значения переменных');
+}
+
+function mathOperation ( arg1, arg2, operation ) {
+    switch (operation) {
+        case '+': {
+            return add(arg1, arg2);
+            break;
+        }
+        case '-': {
+            return sub(arg1, arg2);
+            break;
+        }
+        case '/': {
+            return div(arg1, arg2);
+            break;
+        }
+        case '*': {
+            return mul(arg1, arg2);
+            break;
+        }
+        default: {
+            return 'Неверная операция '
+        }
+    }
+}
+
+function add ( a, b ) { //Сложение
+    return 'сложение = '+ (a + b).toFixed(2);
+}
+function sub ( a, b ) { //Вычитание
+    return 'вычитание = ' + (a - b).toFixed(2);
+}
+function div ( a, b ) { //Деление
+    return 'деление = ' + (a / b).toFixed(2);
+}
+function mul ( a, b ) { //Умножение
+    return 'умножение = ' + (a * b).toFixed(2);
+}
+
+</script>
+</body>
+</html>
