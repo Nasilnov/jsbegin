@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script >
+  'use strict';
+    // 1. С помощью цикла while вывести все простые числа в промежутке от 0 до 100.
+    // Просто́е число́ — натуральное (целое положительное) число, имеющее ровно два различных натуральных делителя — единицу и самого себя.
+    let i = 1;
+
+    while ( i < 100) {
+        if (isSimple(i))  {
+            console.log(i);
+        }
+        i++;
+    }
+
+
+    function isSimple(x) {
+        let j = x - 1;
+
+        while (j > 1) {
+            if (x%j>0) {
+                j--;
+                continue;
+            } else return false;
+        }
+        return true;
+    }
+
+</script>
+
+
+</body>
+</html>
