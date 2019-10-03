@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script >
+    // 2. Для игры, реализованной на уроке, добавить возможность вывода хода номер n (например game.log[10] - получить данные по ходу номер 10)
+    // Не давать игроку выходить за пределы поля.
+    'use strict';
+
+    const settings = {
+        rowCount: 10,
+        colCount: 10,
+        startPositionX: 0,
+        startPositionY: 0,
+    };
+
+    const player = {
+        x: null,
+        y: null,
+
+        init(startX, startY) {
+            this.x = startX;
+            this.y = startY;
+        },
+
+        move(direction) {
+            let z = [this.x, this.y];
+            game.log.push(z);
+            switch (direction) {
+                case 2:
+                    this.y++;
+                    this.y = this.y > 9 ? 9 : this.y;
+                    break;
+                case 4:
+                    this.x--;
+                    this.x = this.x < 0 ? 0 : this.x;
+                    break;
+                case 6:
+                    this.x++;
+                    this.x = this.x > 9 ? 9 : this.x;
+                    break;
+                case 8:
+                    this.y--;
+                    this.y = this.y < 0 ? 0 : this.y;
+                    break;
+            }
+
+        }
+    };
+
+    const game = {
+        settings,
+        player,
+        log: [],
+
+        run() {
+            this.player.init(this.settings.startPositionX, this.settings.startPositionY);
+
+            while (true) {
+                this.render();
+
+                const direction = this.getDirection();
+
+                if (direction === -1) {
+                    return alert('До свидания!');
+                }
+
+                this.player.move(direction);
+            }
+        },
+
+        render() {
+            let map = '';
+
+            for (let row = 0; row < this.settings.rowCount; row++) {
+                for (let col = 0; col < this.settings.colCount; col++) {
+                    if (this.player.y === row && this.player.x === col) {
+                        map += 'o '
+                    } else {
+                        map += 'x '
+                    }
+                }
+                map += '\n';
+            }
+
+            console.clear();
+            console.log(map);
+          //  console.log(game.log)
+        },
+
+        getDirection() {
+            const availableDirections = [-1, 2, 4, 6, 8];
+
+            while(true) {
+                const direction = parseInt(prompt('Введите число, куда хотите переместиться. -1 для выхода.'));
+
+                if (!availableDirections.includes(direction)) {
+                    alert(`Для перемещения необходимо ввести одно из чисел: ${availableDirections.join(', ')}.`);
+                    continue;
+                }
+
+                return direction;
+            }
+        },
+    };
+
+    game.run();
+
+    if (confirm(`Хотите посмотреть свои ходы?`)) {
+        while (true) {
+            let hod = prompt(`Введите номер хода или -1 для выхода`);
+            if (hod != -1) {
+                if (parseInt(hod) < game.log.length) {
+                    player.x = game.log[hod][0];
+                    player.y = game.log[hod][1];
+                    game.render();
+                }
+                else {
+                    alert(`Такого хода не было`);
+                    continue;
+                }
+            }
+            else break;
+        }
+    }
+    alert(`До свидания`);
+
+
+
+</script>
+
+</body>
+</html>
