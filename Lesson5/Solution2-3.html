@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Title</title>
+</head>
+<body>
+<h1> Корзина пуста: </h1>
+<div id="catalog"></div>
+
+<script>
+    'use strict';
+    var  goods = [
+        {id: 1, model: 'компьютер 1', proc: 'Процессор - 1',  memory: 'Память - 1', hdd: 'Диск - 1', price: 100 },
+        {id: 2, model: 'компьютер 2', proc: 'Процессор - 2',  memory: 'Память - 2', hdd: 'Диск - 2', price: 200 },
+        {id: 3, model: 'компьютер 3', proc: 'Процессор - 3',  memory: 'Память - 3', hdd: 'Диск - 3', price: 300 },
+        {id: 4, model: 'компьютер 4', proc: 'Процессор - 4',  memory: 'Память - 4', hdd: 'Диск - 4', price: 400 }
+    ];
+
+
+    const containerElement = document.getElementById('catalog');
+
+    const rowDiv = document.createElement('DIV');
+    rowDiv.className = 'row';
+    containerElement.appendChild(rowDiv);
+
+    const colName = document.createElement('DIV');
+    colName.className = 'name';
+    colName.innerHTML = `<h3>Модель компьюера</h3>`;
+    rowDiv.appendChild(colName);
+
+    const colProc = document.createElement('DIV');
+    colProc.className = 'tech';
+    colProc.innerHTML = `<h3>Процессор</h3>`;
+    rowDiv.appendChild(colProc);
+
+    const colMemory = document.createElement('DIV');
+    colMemory.className = 'tech';
+    colMemory.innerHTML = `<h3>Память</h3>`;
+    rowDiv.appendChild(colMemory);
+
+    const colHdd = document.createElement('DIV');
+    colHdd.className = 'tech';
+    colHdd.innerHTML = `<h3>ПЗУ</h3>`;
+    rowDiv.appendChild(colHdd);
+
+    const colPrice = document.createElement('DIV');
+    colPrice.className = 'tech';
+    colPrice.innerHTML = `<h3>Цена</h3>`;
+    rowDiv.appendChild(colPrice);
+
+    const colCart = document.createElement('DIV');
+    colCart.className = 'cart';
+
+    rowDiv.appendChild(colCart);
+
+    goods.forEach(cell => {
+        const rowDiv = document.createElement('DIV');
+        rowDiv.className = 'row';
+        containerElement.appendChild(rowDiv);
+
+        const colName = document.createElement('DIV');
+        colName.className = 'name';
+        colName.textContent = cell.model;
+        rowDiv.appendChild(colName);
+
+        const colProc = document.createElement('DIV');
+        colProc.className = 'tech';
+        colProc.textContent = cell.proc;
+        rowDiv.appendChild(colProc);
+
+        const colMemory = document.createElement('DIV');
+        colMemory.className = 'tech';
+        colMemory.textContent = cell.memory;
+        rowDiv.appendChild(colMemory);
+
+        const colHdd = document.createElement('DIV');
+        colHdd.className = 'tech';
+        colHdd.textContent = cell.hdd;
+        rowDiv.appendChild(colHdd);
+
+        const colPrice = document.createElement('DIV');
+        colPrice.className = 'tech';
+        colPrice.textContent = cell.price;
+        rowDiv.appendChild(colPrice);
+
+        const colCart = document.createElement('DIV');
+        colCart.className = 'cart';
+        colCart.innerHTML = colCart.innerHTML + `<a href="#" id = "${cell.id}" onclick="addData(this)" >В корзину</a>`;
+        rowDiv.appendChild(colCart);
+
+    });
+
+
+    var data = [];
+
+    function addData(el) {
+        data.push(el.id);
+        // console.log(data);
+        const h1Tag = document.querySelector('H1');
+        let sum = 0;
+        let col = 0;
+        for (let i = 0; i < data.length; i++ ) {
+            //  console.log(data[i]);
+            for (let j = 0; j < goods.length; j++) {
+                if (data[i] == goods[j].id){
+                    sum +=   goods[j].price;
+                    col++
+                }
+            }
+        }
+        h1Tag.innerHTML = `В корзине ${col} товаров на сумму ${sum} рублей`;
+
+    }
+
+</script>
+</body>
+</html>
