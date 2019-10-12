@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Title</title>
+</head>
+<body>
+<h1> Корзина:</h1>
+<div class="cartOption">
+    <div id="cart" style="display: none"></div>
+    <span class="cartDrop">Сбросить</span>
+    <span class="cartShow" id="cartVisible"></span>
+</div>
+<div id="catalog"></div>
+
+<script>
+    
+    'use strict';
+
+    const catalog = {
+        goods: [
+            {id: 1, model: 'компьютер 1', proc: 'Процессор - 1',  memory: 'Память - 1', hdd: 'Диск - 1', price: 100 },
+            {id: 2, model: 'компьютер 2', proc: 'Процессор - 2',  memory: 'Память - 2', hdd: 'Диск - 2', price: 200 },
+            {id: 3, model: 'компьютер 3', proc: 'Процессор - 3',  memory: 'Память - 3', hdd: 'Диск - 3', price: 300 },
+            {id: 4, model: 'компьютер 4', proc: 'Процессор - 4',  memory: 'Память - 4', hdd: 'Диск - 4', price: 400 },
+        ],
+
+        catalogList(){
+            let catalog = "";
+            let article = `<div class="row">
+<div class="name"><h3>Модель компьюера</h3></div>
+<div class="tech"><h3>Процессор</h3></div>
+<div class="tech"><h3>Память</h3></div>
+<div class="tech"><h3>ПЗУ</h3></div>
+<div class="tech"><h3>Цена</h3></div>
+<div class="tech"></div>
+</div>`;
+            let catalogBody = "";
+            this.goods.forEach(cell => {
+                catalogBody += `<div class="row">
+<div class="name"><h3>${cell.model}</h3></div>
+<div class="tech"><h3>${cell.proc}</h3></div>
+<div class="tech"><h3>${cell.memory}</h3></div>
+<div class="tech"><h3>${cell.hdd}</h3></div>
+<div class="tech"><h3>${cell.price}</h3></div>
+<div class="cart"><a href="#" class="cartAdd" data-id="${cell.id}">В корзину</a></div>
+</div>`});
+            catalog = article+catalogBody;
+            return catalog;
+        },
+    };
+
+    const cart = {
+        butShow: 'Показать товары в корзине',
+        butClose:'Скрыть корзину',
+        data: [],
+
+        drop() {
+            this.data = [];
+            this.fullCart();
+            this.hideCart();
+        },
+
+        show(event) {
+            console.log(event.target);
+            if (event.target.textContent == this.butShow){
+                cartElement.innerHTML = this.list();
+                cartElement.style = "flex";
+                this.hideButton();
+            }
+            else {
+                this.hideCart();
+            }
+        },
+
+        hideCart(){
+            cartElement.style.display = "none";
+            document.querySelector('.cartShow').innerHTML = this.butShow;
+        },
+
+        hideButton(){
+            document.querySelector('.cartShow').innerHTML = this.butClose;
+        },
+
+        list(){
+                let catalog = "";
+                this.data.forEach(cell => {
+                    catalog += `<div class="rowcart">
+<div class="nameCart"><h3>${cell.model}</h3></div>
+<div class="techCart"><h3>${cell.price} рублей</h3></div>
+<div class="techCart"><h3>${cell.col} штук</h3></div>
+</div>`});
+                return catalog != '' ? catalog : '<h2>Ваша корзина пуста</h2>';
+        },
+
+        addData(el) {
+            let j = this.existGood(el.dataset.id);
+            if (j != -1) {
+                this.data[j].col += 1;
+            }
+            else {
+                this.data.push({
+                    id: el.dataset.id,
+                    model: catalog.goods.find(good => good.id == el.dataset.id).model,
+                    col: 1,
+                    price: catalog.goods.find(good => good.id == el.dataset.id).price
+                });
+            }
+        },
+
+        existGood(id) {
+            for (let i = 0; i < this.data.length; i++) {
+                if (this.data[i].id == id) {
+                    return i;
+                }
+            }
+            return -1;
+        },
+
+        fullCart() {
+            const h1Tag = document.querySelector('H1');
+            let sum = this.data.reduce((summa, good) => {
+                return summa + good.price * good.col;
+            }, 0);
+            let col = this.data.reduce((col, good) => {
+                return col + good.col;
+            },0);
+            this.hideCart();
+            h1Tag.innerHTML = `В корзине ${col} товаров на сумму ${sum} рублей`;
+            document.querySelector('.cartShow').innerHTML = this.butShow;
+        },
+    };
+
+
+
+    const containerElement = document.getElementById('catalog');
+    const cartElement = document.getElementById('cart');
+    containerElement.innerHTML = catalog.catalogList();
+    cart.fullCart();
+
+
+    document.querySelector('#catalog')
+        .addEventListener('click', event => {
+            ClickHandler(event)
+        });
+
+    document.querySelector('.cartDrop')
+        .addEventListener('click',event => {
+            cart.drop(event)});
+
+    document.querySelector('#cartVisible')
+        .addEventListener('click',event => {
+            cart.show(event)});
+
+    function ClickHandler(event) {
+        if (event.target.className !== 'cartAdd') return;
+        cart.addData(event.target);
+        cart.fullCart();
+    }
+
+</script>
+</body>
+</html>
